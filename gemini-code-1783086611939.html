@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms Lê Hằng English - IELTS Reading Mock Test</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-pink: #FF85A2;
+            --secondary-pink: #FFB3C6;
+            --dark-purple: #8854C0;
+            --mint-green: #00C9A7;
+            --yellow-sunny: #FDCB6E;
+            --correct-green: #00D26A;
+            --wrong-red: #FF4757;
+            --text-dark: #2D3436;
+            --bg-light: #FFF5F7;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            background-image: linear-gradient(45deg, #FFF0F5 25%, transparent 25%), 
+                              linear-gradient(-45deg, #FFF0F5 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #FFF0F5 75%), 
+                              linear-gradient(-45deg, transparent 75%, #FFF0F5 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Header Control Bar */
+        header {
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-purple));
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .header-title h1 {
+            font-size: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        .header-title p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #timer-display {
+            font-size: 22px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .btn-timer {
+            background: var(--yellow-sunny);
+            border: none;
+            color: var(--text-dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #D6A232;
+            transition: all 0.1s;
+        }
+
+        .btn-timer:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.3);
+            height: 16px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--mint-green), #55E6C1);
+            transition: width 0.3s ease;
+        }
+
+        /* Main Workspace Split Screen */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .panel {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            height: 100%;
+        }
+
+        /* Left Panel: Reading Passage */
+        .panel-left {
+            border-right: 4px dashed var(--secondary-pink);
+            background-color: white;
+            padding-right: 30px;
+        }
+
+        /* Highlight Selection Tool colors */
+        .panel-left ::selection {
+            background-color: #FFD1DC;
+            color: #000;
+        }
+
+        .passage-title {
+            color: var(--dark-purple);
+            font-size: 26px;
+            margin-bottom: 20px;
+            border-bottom: 4px solid var(--secondary-pink);
+            padding-bottom: 8px;
+        }
+
+        .paragraph-block {
+            margin-bottom: 24px;
+            line-height: 1.8;
+            font-size: 16px;
+            text-align: justify;
+            position: relative;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .paragraph-block.highlighted-location {
+            background-color: #FFF2B2 !important;
+            border-left: 5px solid var(--yellow-sunny);
+            animation: pulse-highlight 2s infinite alternate;
+        }
+
+        @keyframes pulse-highlight {
+            0% { background-color: #FFF2B2; }
+            100% { background-color: #FFE66D; }
+        }
+
+        .btn-translate {
+            background: #F1F2F6;
+            border: 2px solid #CED6E0;
+            color: #57606F;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+
+        .btn-translate:hover {
+            background: var(--secondary-pink);
+            color: white;
+            border-color: var(--primary-pink);
+        }
+
+        .translation-content {
+            display: none;
+            background-color: #FFF0F3;
+            border-left: 4px solid var(--primary-pink);
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 4px;
+            font-size: 15px;
+            color: #4B4B4B;
+            line-height: 1.7;
+        }
+
+        /* Right Panel: Exercises */
+        .panel-right {
+            background-color: #FFF9FA;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--dark-purple), var(--primary-pink));
+            color: white;
+            padding: 10px 16px;
+            border-radius: 15px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+
+        .question-card {
+            background: white;
+            border: 3px solid #FFE3E8;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 0 #FFE3E8;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-dark);
+        }
+
+        /* Form Inputs (Notes Completion) */
+        .input-blank {
+            border: 3px solid #CED6E0;
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 200px;
+            outline: none;
+            transition: border-color 0.2s;
+            text-align: center;
+        }
+
+        .input-blank:focus {
+            border-color: var(--primary-pink);
+        }
+
+        /* Dropdown Roll Selectors (T/F/NG) */
+        .roll-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: white;
+            border: 3px solid #CED6E0;
+            border-radius: 15px;
+            padding: 8px 35px 8px 15px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 4px 0 #CED6E0;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238854C0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            min-width: 160px;
+        }
+
+        .roll-select:focus {
+            border-color: var(--dark-purple);
+        }
+
+        /* Action & Verification Buttons */
+        .btn-action {
+            background: white;
+            border: 3px solid var(--dark-purple);
+            color: var(--dark-purple);
+            padding: 8px 18px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--dark-purple);
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.1s;
+        }
+
+        .btn-action:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        /* Explanation Blocks */
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            background-color: #F8F9FA;
+            border: 2px dashed #DRDRE4;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .exp-title {
+            font-weight: 700;
+            color: #2F3542;
+            margin-bottom: 4px;
+        }
+
+        .exp-correct { color: var(--correct-green); font-weight: 700; }
+        .exp-segment { margin-bottom: 8px; }
+        .exp-quote { font-style: italic; color: #57606F; background: #FFF; padding: 6px; border-left: 3px solid var(--yellow-sunny); margin: 4px 0; }
+
+        .btn-locate {
+            background: var(--yellow-sunny);
+            border: none;
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 2px 0 #D6A232;
+        }
+
+        /* Feedback States */
+        .card-correct {
+            border-color: var(--correct-green) !important;
+            box-shadow: 0 6px 0 var(--correct-green) !important;
+            background-color: #E8FBEF !important;
+        }
+
+        .card-wrong {
+            border-color: var(--wrong-red) !important;
+            box-shadow: 0 6px 0 var(--wrong-red) !important;
+            background-color: #FFEAEB !important;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        /* Glossary Table Styles */
+        .glossary-section {
+            margin-top: 40px;
+            background: white;
+            border: 3px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .glossary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .glossary-table th {
+            background-color: var(--primary-pink);
+            color: white;
+            text-align: left;
+            padding: 10px;
+            font-weight: 700;
+        }
+
+        .glossary-table td {
+            padding: 10px;
+            border-bottom: 1px solid #FFE3E8;
+        }
+
+        .glossary-table tr:nth-child(even) {
+            background-color: #FFF5F7;
+        }
+
+        /* Submit Bottom Bar */
+        .footer-submit {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 4px solid var(--secondary-pink);
+        }
+
+        .btn-submit-all {
+            background: linear-gradient(135deg, var(--correct-green), #2ED573);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #218C4E;
+            transition: all 0.1s;
+        }
+
+        .btn-submit-all:active {
+            transform: translateY(6px);
+            box-shadow: none;
+        }
+
+        /* Dashboard Result Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            background: white;
+            border: 6px solid var(--primary-pink);
+            border-radius: 30px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-score {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--dark-purple);
+            margin: 20px 0;
+        }
+
+        .modal-comment {
+            font-size: 18px;
+            font-weight: 700;
+            color: #57606F;
+            margin-bottom: 30px;
+        }
+
+        .btn-close-modal {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #D65A7F;
+        }
+
+        blockquote {
+            background: #FFF5F7;
+            border-left: 5px solid var(--primary-pink);
+            padding: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Header Bar -->
+    <header>
+        <div class="header-title">
+            <p>Giáo viên tạo: Ms Lê Hằng English</p>
+            <h1>IELTS READING MOCK TEST</h1>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                <span style="font-size: 12px; font-weight: 700;">TIẾN ĐỘ HOÀN THÀNH:</span>
+                <div class="progress-container">
+                    <div class="progress-bar" id="completion-progress"></div>
+                </div>
+            </div>
+
+            <div class="timer-container">
+                <span id="timer-display">25:00</span>
+                <button class="btn-timer" id="btn-timer-toggle" onclick="toggleTimer()">BẮT ĐẦU</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <div class="workspace">
+        
+        <!-- Left Panel: Reading Passage -->
+        <div class="panel panel-left" id="reading-passage-panel">
+            <h2 class="passage-title">Andrew Carnegie: industrialist and philanthropist</h2>
+            
+            <div class="paragraph-block" id="p1">
+                The Scottish-born American industrialist and philanthropist Andrew Carnegie, who was the leader of the American steel industry from 1873 to 1901, donated large sums of his fortune to educational, cultural, and scientific institutions. He was born in 1835 in Scotland, the son of William Carnegie, a weaver, and Margaret Morrison Carnegie.
+                <br><button class="btn-translate" onclick="toggleTranslation('p1')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p1">
+                    Andrew Carnegie, nhà công nghiệp và nhà từ thiện người Mỹ gốc Scotland, người lãnh đạo ngành công nghiệp thép của Mỹ từ năm 1873 đến năm 1901, đã quyên góp một lượng lớn tài sản của mình cho các tổ chức giáo dục, văn hóa và khoa học. Ông sinh năm 1835 tại Scotland, là con trai của William Carnegie, một thợ dệt, và Margaret Morrison Carnegie.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p2">
+                With the invention of weaning machines, William Carnegie’s job disappeared, and eventually the family was forced into poverty. In 1848 the family left Scotland and settled in Pittsburgh, Pennsylvania, in the USA. William found a job in a cotton factory, but he soon quit to return to his home handloom, making linens and trying to sell them door-to-door. Andrew Carnegie also worked in the cotton factory, but after his father died in 1855, his strong desire to help take care of the family pushed him to educate himself. He became an avid reader, a theatergoer, and a lover of music. 
+                <br><button class="btn-translate" onclick="toggleTranslation('p2')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p2">
+                    Với sự phát minh ra máy dệt, công việc của William Carnegie biến mất, và cuối cùng gia đình bị đẩy vào cảnh nghèo đói. Năm 1848, gia đình rời Scotland và định cư tại Pittsburgh, Pennsylvania, Hoa Kỳ. William tìm được việc làm trong một nhà máy bông, nhưng ông sớm bỏ việc để trở về với khung cửi thủ công tại nhà, làm vải lanh và cố gắng bán chúng tận cửa từng nhà. Andrew Carnegie cũng làm việc trong nhà máy bông, nhưng sau khi cha ông qua đời năm 1855, khát khao mãnh liệt giúp đỡ gia đình đã thôi thúc ông tự học. Ông trở thành một người đam mê đọc sách, một người thích đi xem kịch và một người yêu âm nhạc.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p3">
+                Andrew Carnegie became a messenger boy in a telegraph office and later became a telegraph operator. Thomas A. Scott, superintendent of the western division of the Pennsylvania Railroad, made the eighteen-year-old his secretary. Carnegie was soon earning enough to buy a house for his mother. During the Civil War in the United States (1861-65), he helped organize the military telegraph system, but soon returned to Pittsburgh to take Scott’s old job with the railroad. 
+                <br><button class="btn-translate" onclick="toggleTranslation('p3')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p3">
+                    Andrew Carnegie trở thành một cậu bé đưa tin trong một văn phòng điện tín và sau đó trở thành một nhân viên vận hành điện tín. Thomas A. Scott, giám đốc bộ phận phía tây của Đường sắt Pennsylvania, đã nhận chàng trai 18 tuổi này làm thư ký của mình. Carnegie sớm kiếm đủ tiền để mua một ngôi nhà cho mẹ mình. Trong cuộc Nội chiến ở Hoa Kỳ (1861-65), ông đã giúp tổ chức hệ thống điện tín quân sự, nhưng sớm trở lại Pittsburgh để tiếp quản công việc cũ của Scott tại hãng đường sắt.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p4">
+                Between 1865 and 1870 Carnegie made money through investments in several small iron mills and factories. He also traveled throughout England, selling the bonds of small United States railroads and bridge companies. Carnegie began to see that steel was eventually going to replace iron for the manufacture of rails, structural shapes, pipe, and wire. In 1873 he organized a steel rail company and continued building by cutting prices, driving out competitors, shaking off weak partners, and putting earnings back into the company. He never went public (sold shares of his company in order to raise money). Instead he obtained capital from profit, and when necessary from banks, and he kept on growing, making heavy steel alone. 
+                <br><button class="btn-translate" onclick="toggleTranslation('p4')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p4">
+                    Từ năm 1865 đến 1870, Carnegie kiếm tiền thông qua việc đầu tư vào một số nhà máy và xưởng sắt nhỏ. Ông cũng đi khắp nước Anh, bán trái phiếu của các công ty đường sắt và cầu nhỏ của Hoa Kỳ. Carnegie bắt đầu nhận thấy rằng thép cuối cùng sẽ thay thế sắt để sản xuất đường ray, khung cấu trúc, đường ống và dây dây điện. Năm 1873, ông thành lập một công ty đường ray thép và tiếp tục xây dựng bằng cách cắt giảm giá thành, loại bỏ các đối thủ cạnh tranh, rũ bỏ các đối tác yếu kém và tái đầu tư lợi nhuận vào công ty. Ông không bao giờ cổ phần hóa ra công chúng (bán cổ phần công ty để huy động vốn). Thay vào đó, ông thu thập vốn từ lợi nhuận, và khi cần thiết thì vay từ các ngân hàng, và ông tiếp tục phát triển, một mình sản xuất thép hạng nặng.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p5">
+                In the 1880s Carnegie’s purchases included a majority stake in the H C Frick Company in Pennsylvania that had vast coal interests, and also the Homestead mills business. Frick became his partner and eventually chairman of the Carnegie Company. Carnegie had moved to New York City in 1867 to be close to the marketing centers for steel products, while Frick stayed in Pennsylvania as the general manager. They made a good team, Behind the scenes, Carnegie planned new projects and the improvement of existing plants; Frick was the working director who watched over the mass-production programs that helped keep price down.
+                <br><button class="btn-translate" onclick="toggleTranslation('p5')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p5">
+                    Vào những năm 1880, các thương vụ mua lại của Carnegie bao gồm phần lớn cổ phần của Công ty H C Frick ở Pennsylvania, nơi có nguồn lợi ích khai thác than khổng lồ, và cả hoạt động kinh doanh của các nhà máy sản xuất Homestead. Frick trở thành đối tác của ông và cuối cùng là chủ tịch của Công ty Carnegie. Carnegie đã chuyển đến Thành phố New York vào năm 1867 để tiếp cận gần hơn với các trung tâm tiếp thị sản phẩm thép, trong khi Frick ở lại Pennsylvania làm tổng quản lý. Họ đã tạo thành một đội ăn ý, đằng sau hậu trường, Carnegie lên kế hoạch cho các dự án mới và cải tiến các nhà máy hiện có; Frick là giám đốc điều hành trực tiếp giám sát các chương trình sản xuất hàng loạt giúp giữ giá thành ở mức thấp.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p6">
+                Carnegie spent his leisure time traveling. He also wrote several books, including Triumphant Democracy (1886), which pointed out what he thought were the advantages of life in the United States over the unequal societies of Britain and other European countries. To Carnegie, access to education was the key to America’s political stability and industrial accomplishments. In 1889 he published an article, ‘Wealth’, stating his belief that the rich had a duty to use their money to improve the welfare of the community. Carnegie remained a bachelor until his mother died in 1886. A year later he married Louise Whitfield and they had one child together. The couple began to spend six months each year in Scotland, though Carnegie kept an eye on business developments and problems. 
+                <br><button class="btn-translate" onclick="toggleTranslation('p6')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p6">
+                    Carnegie dành thời gian rảnh rỗi để đi du lịch. Ông cũng viết một số cuốn sách, bao gồm Triumphant Democracy (1886), chỉ ra những điều ông nghĩ là lợi thế của cuộc sống ở Hoa Kỳ so với các xã hội bất bình đẳng của Anh và các nước châu Âu khác. Đối với Carnegie, tiếp cận giáo dục là chìa khóa cho sự ổn định chính trị và các thành tựu công nghiệp của Mỹ. Năm 1889, ông xuất bản một bài báo mang tên 'Wealth' (Giàu có), tuyên bố niềm tin của mình rằng người giàu có nghĩa vụ sử dụng tiền của họ để cải thiện phúc lợi của cộng đồng. Carnegie vẫn độc thân cho đến khi mẹ ông qua đời vào năm 1886. Một năm sau ông kết hôn với Louise Whitfield và họ có với nhau một người con. Hai vợ chồng bắt đầu dành sáu tháng mỗi năm ở Scotland, mặc dù Carnegie vẫn theo sát các diễn biến và vấn đề kinh doanh.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p7">
+                Carnegie’s absence from the United States was a factor in the Homestead mills strike of 1892. After acquiring Homestead, Carnegie had invested in new plants and equipment, increased production, and automated many of the mill’s operations, cutting down the number of workers that were needed. Carnegie believed that workers had a right to join unions and to bargain with management through their unions. He also recognized the right to strike, as long as the action was conducted peacefully. He viewed strikes as trials of strength, with peaceful discussion resolving the conflict. In contract talks during 1892, Frick wanted to lower the minimum wage because of the need for fewer workers. The union representing his workers would not accept this and organized a strike. 
+                <br><button class="btn-translate" onclick="toggleTranslation('p7')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p7">
+                    Sự vắng mặt của Carnegie khỏi Hoa Kỳ là một yếu tố dẫn đến cuộc đình công tại các nhà máy Homestead năm 1892. Sau khi thâu tóm Homestead, Carnegie đã đầu tư vào các nhà máy và thiết bị mới, tăng sản lượng và tự động hóa nhiều hoạt động của nhà máy, cắt giảm số lượng công nhân cần thiết. Carnegie tin rằng công nhân có quyền tham gia các công đoàn và thương lượng với ban quản lý thông qua công đoàn của họ. Ông cũng công nhận quyền đình công, miễn là hành động đó được tiến hành một cách hòa bình. Ông coi các cuộc đình công là những thử nghiệm về sức mạnh, với các cuộc thảo luận hòa bình để giải quyết xung đột. Trong các cuộc đàm phán hợp đồng vào năm 1892, Frick muốn hạ mức lương tối thiểu vì nhu cầu sử dụng ít công nhân hơn. Công đoàn đại diện cho các công nhân đã không chấp nhận điều này và tổ chức một cuộc đình công.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p8">
+                Following a violent confrontation that resulted in the death of eight workers, soldiers were sent in to restore order and Carnegie was criticized for his lack of action. In the 1890s Carnegie also began to meet with tougher competition from newer, bigger companies who were interested in controlled prices and sharing the market. Companies that he had sold to for years threatened to cut down their purchases unless he agreed to cooperate. These threats made him decide to fight back. He refused to enter into any agreements with other companies. Moreover, he decided to invade their territories by making similar products and by expanding his sales activities into the west of the country. Eventually, though, he decided to sell his company to the newly formed U.S. Steel Corporation in 1901 for almost $500 million. Carnegie’s personal share was $225 million. 
+                <br><button class="btn-translate" onclick="toggleTranslation('p8')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p8">
+                    Sau một cuộc đối đầu bạo lực dẫn đến cái chết của tám công nhân, binh lính đã được gửi đến để khôi phục trật tự và Carnegie bị chỉ trích vì sự thiếu hành động của mình. Vào những năm 1890, Carnegie cũng bắt đầu gặp phải sự cạnh tranh khốc liệt hơn từ các công ty mới hơn, lớn hơn, những thực thể quan tâm đến việc kiểm soát giá cả và chia sẻ thị trường. Các công ty mà ông đã bán hàng cho trong nhiều năm đe dọa sẽ cắt giảm lượng mua trừ khi ông đồng ý hợp tác. Những lời đe dọa này khiến ông quyết định chiến đấu trở lại. Ông từ chối tham gia bất kỳ thỏa thuận nào với các công ty khác. Hơn nữa, ông quyết định xâm nhập vào lãnh thổ của họ bằng cách tạo ra các sản phẩm tương tự và mở rộng hoạt động bán hàng sang phía tây đất nước. Tuy nhiên, cuối cùng ông quyết định bán công ty của mình cho Tập đoàn Thép Hoa Kỳ (U.S. Steel Corporation) mới thành lập vào năm 1901 với giá gần 500 triệu USD. Cổ phần cá nhân của Carnegie là 225 triệu USD.
+                </div>
+            </div>
+
+            <div class="paragraph-block" id="p9">
+                In retirement, Carnegie began to set up trust funds ‘for the improvement of mankind’. He built some three thousand public libraries all over the English-speaking world and funded galleries, museums and concert halls in the US. He also built a group of technical schools, a research institute, and a foundation providing pensions for university professors. When Carnegie died in 1919, the continuation of his broad interests was put under the general charge of the Carnegie Corporation, with a donation of $125 million.
+                <br><button class="btn-translate" onclick="toggleTranslation('p9')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-p9">
+                    Khi nghỉ hưu, Carnegie bắt đầu thành lập các quỹ tín thác 'để cải thiện nhân loại'. Ông đã xây dựng khoảng ba nghìn thư viện công cộng trên khắp thế giới nói tiếng Anh và tài trợ cho các phòng trưng bày, bảo tàng và phòng hòa nhạc ở Hoa Kỳ. Ông cũng xây dựng một nhóm các trường kỹ thuật, một viện nghiên cứu và một quỹ cung cấp lương hưu cho các giáo sư đại học. Khi Carnegie qua đời năm 1919, việc tiếp tục các mối quan tâm rộng lớn của ông đã được giao cho Tập đoàn Carnegie quản lý chung, với một khoản quyên góp trị giá 125 triệu USD.
+                </div>
+            </div>
+
+            <!-- Glossary Section Embedded beautifully underneath the text -->
+            <div class="glossary-section">
+                <h3 style="color: var(--dark-purple);">📚 BẢNG TỪ VỰNG NHÀ NGHỀ (GLOSSARY)</h3>
+                <p style="font-size: 13px; color: #7F8C8D; margin-top: 4px;">Tổng hợp các từ vựng cốt lõi học thuật xuất hiện trực tiếp hoặc đồng nghĩa trong bài thi.</p>
+                <table class="glossary-table">
+                    <thead>
+                        <tr>
+                            <th>Từ vựng</th>
+                            <th>Từ loại</th>
+                            <th>Nghĩa tiếng Việt & Từ đồng nghĩa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Industrialist</td><td>n</td><td>Nhà công nghiệp lớn</td></tr>
+                        <tr><td>Philanthropist</td><td>n</td><td>Nhà từ thiện hào phóng</td></tr>
+                        <tr><td>Fortune</td><td>n</td><td>Khối tài sản khổng lồ (= wealth)</td></tr>
+                        <tr><td>Weaver</td><td>n</td><td>Thợ dệt vải thủ công</td></tr>
+                        <tr><td>Poverty</td><td>n</td><td>Sự nghèo đói cùng cực</td></tr>
+                        <tr><td>Avid</td><td>adj</td><td>Đam mê cuồng nhiệt, khao khát</td></tr>
+                        <tr><td>Superintendent</td><td>n</td><td>Giám đốc giám sát, quản lý cấp cao</td></tr>
+                        <tr><td>Investment</td><td>n</td><td>Khoản đầu tư sinh lời</td></tr>
+                        <tr><td>Manufacture</td><td>v/n</td><td>Sản xuất công nghiệp quy mô lớn</td></tr>
+                        <tr><td>Competitor</td><td>n</td><td>Đối thủ cạnh tranh sòng phẳng</td></tr>
+                        <tr><td>Capital</td><td>n</td><td>Nguồn vốn kinh doanh hữu hình</td></tr>
+                        <tr><td>Stake</td><td>n</td><td>Cổ phần nắm giữ trong doanh nghiệp</td></tr>
+                        <tr><td>Mass-production</td><td>n</td><td>Sản xuất hàng loạt dây chuyền</td></tr>
+                        <tr><td>Accomplishment</td><td>n</td><td>Thành tựu, kết quả vẻ vang</td></tr>
+                        <tr><td>Welfare</td><td>n</td><td>Phúc lợi xã hội cộng đồng</td></tr>
+                        <tr><td>Bachelor</td><td>n</td><td>Người đàn ông độc thân</td></tr>
+                        <tr><td>Automate</td><td>v</td><td>Tự động hóa bằng máy móc</td></tr>
+                        <tr><td>Bargain</td><td>v</td><td>Thương lượng, mặc cả lợi ích</td></tr>
+                        <tr><td>Confrontation</td><td>n</td><td>Cuộc đối đầu, đụng độ nảy lửa</td></tr>
+                        <tr><td>Invade</td><td>v</td><td>Xâm chiếm, lấn sân sang thị trường</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Right Panel: Exercises / Quiz Layout -->
+        <div class="panel panel-right">
+            
+            <!-- SECTION 1: QUESTIONS 1-7 -->
+            <div class="section-title">📝 DẠNG 1: NOTES COMPLETION (Questions 1–7)</div>
+            <p style="font-size: 13px; color: #57606F; margin-bottom: 15px; font-weight: bold;">Điền MỘT TỪ DUY NHẤT trích từ văn bản gốc vào ô trống sau đó nhấn Kiểm Tra.</p>
+
+            <!-- Question 1 -->
+            <div class="question-card" id="card-q1">
+                <div class="question-text">1. 1835-1855: Found employment in the same workplace as his <input type="text" id="q1" class="input-blank" placeholder="Điền từ..."></div>
+                <button class="btn-action" onclick="checkFillBlank('q1', 'father', 'p2')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q1">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">father</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span> 
+                        <div class="exp-quote">"William found a job in a cotton factory... Andrew Carnegie also worked in the cotton factory..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> William tìm được việc làm tại một nhà máy dệt bông... Andrew Carnegie cũng làm việc trong chính nhà máy dệt bông đó. Do đó ông làm chung chỗ với cha của mình.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> same workplace = cotton factory <button class="btn-locate" onclick="locatePassage('p2')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" id="card-q2">
+                <div class="question-text">2. 1835-1855: Educated himself through books, theatrical performances and <input type="text" id="q2" class="input-blank" placeholder="Điền từ..."></div>
+                <button class="btn-action" onclick="checkFillBlank('q2', 'music', 'p2')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q2">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">music</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"He became an avid reader, a theatergoer, and a lover of music."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Ông trở thành một người đam mê đọc sách (books), thường xuyên đi xem kịch (theatrical performances) và là người yêu âm nhạc (music).</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> avid reader = books | theatergoer = theatrical performances <button class="btn-locate" onclick="locatePassage('p2')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" id="card-q3">
+                <div class="question-text">3. 1855-1865: Became <input type="text" id="q3" class="input-blank" placeholder="Điền từ..."> to Thomas A Scott at Pennsylvania Railroad.</div>
+                <button class="btn-action" onclick="checkFillBlank('q3', 'secretary', 'p3')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q3">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">secretary</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"Thomas A. Scott, superintendent of the western division of the Pennsylvania Railroad, made the eighteen-year-old his secretary."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Thomas A. Scott, giám đốc bộ phận phía tây của Đường sắt Pennsylvania, đã chọn chàng trai 18 tuổi này làm thư ký của mình.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> made him his secretary = became secretary to <button class="btn-locate" onclick="locatePassage('p3')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" id="card-q4">
+                <div class="question-text">4. 1865-1870: Realised that changing engineering needs would require a greater demand for <input type="text" id="q4" class="input-blank" placeholder="Điền từ..."></div>
+                <button class="btn-action" onclick="checkFillBlank('q4', 'steel', 'p4')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q4">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">steel</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"Carnegie began to see that steel was eventually going to replace iron for the manufacture of rails..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Carnegie bắt đầu nhận ra thép cuối cùng sẽ thay thế sắt để phục vụ nhu cầu chế tạo cơ khí xây dựng đường ray...</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> replace iron for engineering needs = require a greater demand for steel <button class="btn-locate" onclick="locatePassage('p4')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" id="card-q5">
+                <div class="question-text">5. 1873: Managed a rail manufacturing business by reducing <input type="text" id="q5" class="input-blank" placeholder="Điền từ..."></div>
+                <button class="btn-action" onclick="checkFillBlank('q5', 'prices', 'p4')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q5">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">prices</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"In 1873 he organized a steel rail company and continued building by cutting prices..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Năm 1873, ông thiết lập công ty đường ray thép và tiếp tục mở rộng quy mô kinh doanh bằng cách cắt giảm giá thành.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> cutting = reducing <button class="btn-locate" onclick="locatePassage('p4')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" id="card-q6">
+                <div class="question-text">6. 1873: Reinvesting profit and sometimes borrowing money from <input type="text" id="q6" class="input-blank" placeholder="Điền từ..."></div>
+                <button class="btn-action" onclick="checkFillBlank('q6', 'banks', 'p4')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q6">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">banks</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"Instead he obtained capital from profit, and when necessary from banks..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Thay vào đó ông tích lũy nguồn vốn từ lợi nhuận kiếm được, và khi cấp bách thì lấy từ các ngân hàng.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> when necessary from = borrowing money from <button class="btn-locate" onclick="locatePassage('p4')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" id="card-q7">
+                <div class="question-text">7. 1880s: Carnegie’s responsibilities involved arranging future <input type="text" id="q7" class="input-blank" placeholder="Điền từ..."> and innovations for factories.</div>
+                <button class="btn-action" onclick="checkFillBlank('q7', 'projects', 'p5')">Kiểm Tra Đáp Án</button>
+                
+                <div class="explanation-box" id="exp-q7">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">projects</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"Behind the scenes, Carnegie planned new projects and the improvement of existing plants..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Đằng sau hậu trường, Carnegie chịu trách nhiệm lên kế hoạch lập ra các dự án mới (new projects) và nâng cấp cải tiến nhà xưởng hiện hành.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> planned = arranging | improvements = innovations <button class="btn-locate" onclick="locatePassage('p5')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+
+            <!-- SECTION 2: QUESTIONS 8-13 -->
+            <div class="section-title">📊 DẠNG 2: TRUE / FALSE / NOT GIVEN (Questions 8–13)</div>
+            <p style="font-size: 13px; color: #57606F; margin-bottom: 15px; font-weight: bold;">Chọn giá trị phù hợp trong cuộn lựa chọn dưới đây.</p>
+
+            <!-- Question 8 -->
+            <div class="question-card" id="card-q8">
+                <div class="question-text">8. Carnegie believed that the USA offered more opportunities than European countries did.</div>
+                <select id="q8" class="roll-select" onchange="checkDropdown('q8', 'TRUE', 'p6')">
+                    <option value="">-- Lựa chọn --</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+                
+                <div class="explanation-box" id="exp-q8">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">TRUE</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"...advantages of life in the United States over the unequal societies of Britain and other European countries."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Cuốn sách của ông chỉ ra những điểm vượt trội vượt bậc của cuộc sống tại Mỹ so với các thể chế xã hội bất bình đẳng tại Anh và các quốc gia châu Âu khác.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> advantages of life = offered more opportunities <button class="btn-locate" onclick="locatePassage('p6')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" id="card-q9">
+                <div class="question-text">9. A smaller workforce was required at the Homestead factory after Carnegie took control.</div>
+                <select id="q9" class="roll-select" onchange="checkDropdown('q9', 'TRUE', 'p7')">
+                    <option value="">-- Lựa chọn --</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+                
+                <div class="explanation-box" id="exp-q9">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">TRUE</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"...automated many of the mill’s operations, cutting down the number of workers that were needed."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Ông tự động hóa rất nhiều khâu vận hành của nhà máy xưởng, giúp cắt giảm đáng kể số lượng công nhân cần thiết ban đầu.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> cutting down workers needed = smaller workforce required <button class="btn-locate" onclick="locatePassage('p7')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" id="card-q10">
+                <div class="question-text">10. Carnegie prevented his workers from joining unions.</div>
+                <select id="q10" class="roll-select" onchange="checkDropdown('q10', 'FALSE', 'p7')">
+                    <option value="">-- Lựa chọn --</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+                
+                <div class="explanation-box" id="exp-q10">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">FALSE</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"Carnegie believed that workers had a right to join unions and to bargain with management through their unions."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Carnegie tin tưởng sâu sắc rằng người lao động có quyền hợp pháp để gia nhập công đoàn nghiệp đoàn xã hội. Thông tin bài viết mâu thuẫn hoàn toàn với câu hỏi.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> right to join unions &ne; prevented from joining <button class="btn-locate" onclick="locatePassage('p7')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" id="card-q11">
+                <div class="question-text">11. Carnegie blamed Frick for the violent workers strike in 1892.</div>
+                <select id="q11" class="roll-select" onchange="checkDropdown('q11', 'NOT GIVEN', 'p8')">
+                    <option value="">-- Lựa chọn --</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+                
+                <div class="explanation-box" id="exp-q11">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">NOT GIVEN</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"Following a violent confrontation that resulted in the death of eight workers... Carnegie was criticized for his lack of action."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Đoạn văn chỉ nói Carnegie bị chỉ trích kịch liệt vì sự thờ ơ không hành động, hoàn toàn không có chi tiết hay căn cứ nào khẳng định ông đổ lỗi (blamed) cho Frick.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> Không tìm thấy thông tin tương đương. <button class="btn-locate" onclick="locatePassage('p8')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" id="card-q12">
+                <div class="question-text">12. In the 1890s Carnegie negotiated with his competitors.</div>
+                <select id="q12" class="roll-select" onchange="checkDropdown('q12', 'FALSE', 'p8')">
+                    <option value="">-- Lựa chọn --</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+                
+                <div class="explanation-box" id="exp-q12">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">FALSE</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"He refused to enter into any agreements with other companies. Moreover, he decided to invade their territories..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Ông thẳng thừng từ chối ký kết hay bước vào bất cứ thỏa thuận đàm phán hợp tác nào với đối thủ cạnh tranh, ngược lại ông còn chủ động tấn công thị phần của họ.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> refused to enter agreements &ne; negotiated with competitors <button class="btn-locate" onclick="locatePassage('p8')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" id="card-q13">
+                <div class="question-text">13. Carnegie’s provision of funds for libraries was limited to those in the United States.</div>
+                <select id="q13" class="roll-select" onchange="checkDropdown('q13', 'FALSE', 'p9')">
+                    <option value="">-- Lựa chọn --</option>
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                    <option value="NOT GIVEN">NOT GIVEN</option>
+                </select>
+                
+                <div class="explanation-box" id="exp-q13">
+                    <div class="exp-segment"><span class="exp-title">1. ĐÁP ÁN:</span> <span class="exp-correct">FALSE</span></div>
+                    <div class="exp-segment"><span class="exp-title">2. ĐOẠN CHỨA ĐÁP ÁN:</span>
+                        <div class="exp-quote">"He built some three thousand public libraries all over the English-speaking world..."</div>
+                    </div>
+                    <div class="exp-segment"><span class="exp-title">3. DỊCH NGHĨA ĐOẠN CHỨA ĐÁP ÁN:</span> Ông xây dựng khoảng 3000 thư viện công cộng trên khắp toàn thế giới nói tiếng Anh chứ không chỉ thu hẹp giới hạn trong nội bộ nước Mỹ.</div>
+                    <div class="exp-segment"><span class="exp-title">4. CỤM TỪ ĐỒNG NGHĨA:</span> all over the English-speaking world &ne; limited to United States <button class="btn-locate" onclick="locatePassage('p9')">📍 Xem dẫn chứng</button></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Bar Summary Submit -->
+    <div class="footer-submit">
+        <button class="btn-submit-all" onclick="submitExam()">NỘP BÀI LÀM ĐỂ CHẤM ĐIỂM 🏆</button>
+    </div>
+
+    <!-- Gamified Modal Report Dashboard -->
+    <div class="modal-overlay" id="result-modal">
+        <div class="modal-card">
+            <h2 style="color: var(--primary-pink); font-size: 28px;">🎉 BẢNG VÀNG THÀNH TÍCH 🎉</h2>
+            <div class="modal-score" id="score-text">0 / 13</div>
+            <div class="modal-comment" id="comment-text">Làm tốt lắm! Hãy tiếp tục phát huy con nhé!</div>
+            <button class="btn-close-modal" onclick="closeModal()">ĐÓNG VÀ XEM LẠI LỖI</button>
+        </div>
+    </div>
+
+    <script>
+        // Web Audio API Sound Generation Engine (No External Assets Required)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                // Happy "Ding" Sound
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);  // A5
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'wrong') {
+                // Sad "Buzzer" Sound
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            }
+        }
+
+        // CountDown Timer Variables
+        let timeLeft = 25 * 60; // 25 minutes
+        let timerId = null;
+        let timerRunning = false;
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer-display').innerText = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('btn-timer-toggle');
+            if (!timerRunning) {
+                // Start
+                timerRunning = true;
+                btn.innerText = "TẠM DỪNG";
+                btn.style.background = "#FF4757";
+                btn.style.boxShadow = "0 4px 0 #C23616";
+                timerId = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerId);
+                        alert("Đã hết giờ làm bài. Bạn vẫn có thể tiếp tục làm, nhưng nhớ là trong phòng thi thật, bạn chỉ nên làm một bài như thế này trong 20-25 phút thôi nha.");
+                        btn.innerText = "BẮT ĐẦU";
+                        timerRunning = false;
+                    }
+                }, 1000);
+            } else {
+                // Pause
+                timerRunning = false;
+                btn.innerText = "TIẾP TỤC";
+                btn.style.background = "var(--yellow-sunny)";
+                btn.style.boxShadow = "0 4px 0 #D6A232";
+                clearInterval(timerId);
+            }
+        }
+
+        // Paragraph Translation Toggler
+        function toggleTranslation(id) {
+            const content = document.getElementById('trans-' + id);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+
+        // Track and update progress bar
+        const totalQuestions = 13;
+        const answersState = {};
+
+        function calculateProgress() {
+            let answeredCount = Object.keys(answersState).length;
+            let percent = (answeredCount / totalQuestions) * 100;
+            document.getElementById('completion-progress').style.width = percent + '%';
+        }
+
+        // Validate Fill-in-the-blank Form inputs
+        function checkFillBlank(inputFieldId, correctAnswer, paragraphId) {
+            const inputEl = document.getElementById(inputFieldId);
+            const cardEl = document.getElementById('card-' + inputFieldId);
+            const expBox = document.getElementById('exp-' + inputFieldId);
+            const userAns = inputEl.value.trim().toLowerCase();
+
+            if (userAns === correctAnswer.toLowerCase()) {
+                cardEl.className = "question-card card-correct";
+                playSound('correct');
+                answersState[inputFieldId] = true;
+            } else {
+                cardEl.className = "question-card card-wrong";
+                playSound('wrong');
+                inputEl.value = correctAnswer; // Auto-populate correct answers immediately
+                answersState[inputFieldId] = false;
+            }
+            expBox.style.display = "block";
+            calculateProgress();
+        }
+
+        // Validate Dropdown Selection Menu options
+        function checkDropdown(selectId, correctAnswer, paragraphId) {
+            const selectEl = document.getElementById(selectId);
+            const cardEl = document.getElementById('card-' + selectId);
+            const expBox = document.getElementById('exp-' + selectId);
+            const userValue = selectEl.value;
+
+            if (userValue === "") return;
+
+            if (userValue === correctAnswer) {
+                cardEl.className = "question-card card-correct";
+                playSound('correct');
+                answersState[selectId] = true;
+            } else {
+                cardEl.className = "question-card card-wrong";
+                playSound('wrong');
+                selectEl.value = correctAnswer; // Auto-set correct option on failure
+                answersState[selectId] = false;
+            }
+            expBox.style.display = "block";
+            calculateProgress();
+        }
+
+        // Locate Evidence Highlighter Button function
+        function locatePassage(paragraphId) {
+            // Remove previous highlights
+            document.querySelectorAll('.paragraph-block').forEach(p => {
+                p.classList.remove('highlighted-location');
+            });
+
+            const targetPara = document.getElementById(paragraphId);
+            if (targetPara) {
+                targetPara.classList.add('highlighted-location');
+                targetPara.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Exam Submission Score Evaluation
+        function submitExam() {
+            let score = 0;
+            // Scan all states
+            for (let i = 1; i <= 7; i++) {
+                if (answersState['q' + i] === true) score++;
+            }
+            for (let i = 8; i <= 13; i++) {
+                if (answersState['q' + i] === true) score++;
+            }
+
+            document.getElementById('score-text').innerText = `${score} / 13`;
+            
+            let comment = "";
+            if (score === 13) {
+                comment = "👑 TUYỆT ĐỈNH THIÊN TÀI! Con đã đạt điểm tuyệt đối 13/13, Ms Hằng rất tự hào về con!";
+            } else if (score >= 10) {
+                comment = "🌟 LÀM TỐT LẮM! Kỹ năng đọc hiểu siêu đỉnh. Hãy kiểm tra các câu sai để hoàn thiện nhé.";
+            } else if (score >= 6) {
+                comment = "👍 KHÁ TỐT! Con đã rất cố gắng. Đọc kỹ lại các bẫy đồng nghĩa (Synonyms) nha.";
+            } else {
+                comment = "💪 CỐ LÊN NHÉ! Đọc hiểu IELTS cần thời gian. Con hãy đối chiếu bản dịch và tích lũy từ vựng.";
+            }
+
+            document.getElementById('comment-text').innerText = comment;
+            document.getElementById('result-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('result-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
